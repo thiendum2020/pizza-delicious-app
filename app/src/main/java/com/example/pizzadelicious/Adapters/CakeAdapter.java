@@ -1,6 +1,7 @@
 package com.example.pizzadelicious.Adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pizzadelicious.Fragments.CakeFragment;
@@ -18,6 +21,7 @@ import com.example.pizzadelicious.Models.BillDetail;
 import com.example.pizzadelicious.Models.JSONResponseBill;
 import com.example.pizzadelicious.Models.JSONResponseBillDetail;
 import com.example.pizzadelicious.Models.Product;
+import com.example.pizzadelicious.ProductDetailFragment;
 import com.example.pizzadelicious.R;
 import com.example.pizzadelicious.Retrofit.ApiInterface;
 import com.example.pizzadelicious.Retrofit.Common;
@@ -68,6 +72,15 @@ public class CakeAdapter extends RecyclerView.Adapter<CakeAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 Toast.makeText(cakeFragment.getContext(), "Đã chọn: " + model.getName(), Toast.LENGTH_SHORT).show();
+                Bundle bundle = new Bundle();
+                Fragment someFragment = new ProductDetailFragment();
+                bundle.putString("productId", String.valueOf(list.get(position).getId()));
+                someFragment.setArguments(bundle);
+
+                FragmentTransaction transaction = cakeFragment.getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameLayout, someFragment ); // give your fragment container id in first parameter
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
             }
         });
 

@@ -57,6 +57,15 @@ public interface ApiInterface {
     @GET("bill/user/{id}")
     Call<JSONResponseBill> getBillByUserId(@Path("id") String id);
 
+    @GET("bill/note/created")
+    Call<JSONResponseBill> getBillByNoteCreated();
+    @GET("bill/note/waiting")
+    Call<JSONResponseBill> getBillByNoteWaiting();
+    @GET("bill/note/delivering")
+    Call<JSONResponseBill> getBillByNoteDelivering();
+    @GET("bill/note/success")
+    Call<JSONResponseBill> getBillByNoteSuccess();
+
     @GET("bill")
     Call<JSONResponseBill> getAllBill();
 

@@ -1,5 +1,6 @@
 package com.example.pizzadelicious.Fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -39,8 +40,8 @@ public class CartFragment extends Fragment {
     RecyclerView recyclerView_cart;
     ArrayList<BillDetail> billDetails;
     ApiInterface service;
-    TextView tv_total_bill, tv_count_item;
-    Button btn_place_order;
+    TextView tv_total_bill, tv_count_item, tv_name_user, tv_phone_user, tv_address_user;
+    Button btn_order;
 
     public CartFragment() {
         // Required empty public constructor
@@ -53,6 +54,10 @@ public class CartFragment extends Fragment {
         setControl(view);
         loadData();
         setEvent();
+//        if(Common.currentBill != null){
+//            Log.e("sl item:", ""+billDetails.size());
+//            tv_count_item.setText(""+billDetails.size());
+//        }
     }
 
     @Override
@@ -64,10 +69,12 @@ public class CartFragment extends Fragment {
 
     private void loadData() {
         if (Common.isConnectedToInternet(getActivity().getBaseContext())) {
+
             Common.totalBill = 0;
             if (Common.currentBill == null) {
                 Toast.makeText(getActivity(), "Giỏ hàng trống!", Toast.LENGTH_SHORT).show();
             } else {
+
                 service.getBillDetailByBillId("" + Common.currentBill.getId()).enqueue(new Callback<JSONResponseBillDetail>() {
                     @Override
                     public void onResponse(Call<JSONResponseBillDetail> call, Response<JSONResponseBillDetail> response) {
@@ -82,9 +89,10 @@ public class CartFragment extends Fragment {
                             Log.e("prices " + i, "" + billDetails.get(i).getPrices());
                             Common.totalBill = Common.totalBill + Integer.parseInt(billDetails.get(i).getPrices());
                         }
-
+                        tv_count_item.setText(""+billDetails.size());
                         Log.e("total ", Common.totalBill.toString());
                         tv_total_bill.setText(Common.totalBill.toString());
+
                     }
 
                     @Override
@@ -96,6 +104,10 @@ public class CartFragment extends Fragment {
         } else {
             Toast.makeText(getActivity(), "Please check your internet!!", Toast.LENGTH_SHORT).show();
         }
+        tv_name_user.setText(Common.currentUser.getName());
+        tv_phone_user.setText(Common.currentUser.getPhone());
+        tv_address_user.setText(Common.currentUser.getAddress());
+
     }
 
     private void setControl(View view) {
@@ -105,7 +117,11 @@ public class CartFragment extends Fragment {
 //        }
         tv_total_bill = view.findViewById(R.id.tv_total_bill);
         tv_count_item = view.findViewById(R.id.tv_count_item);
-        btn_place_order = view.findViewById(R.id.btn_place_order);
+        tv_name_user = view.findViewById(R.id.tv_name_user);
+        tv_phone_user = view.findViewById(R.id.tv_phone_user);
+        tv_address_user = view.findViewById(R.id.tv_address_user);
+
+        btn_order = view.findViewById(R.id.btn_order);
 
         recyclerView_cart = view.findViewById(R.id.recyclerView_cart);
         recyclerView_cart.setHasFixedSize(true);
@@ -113,16 +129,18 @@ public class CartFragment extends Fragment {
     }
 
     private void setEvent() {
-        if(Common.currentBill != null){
-            tv_count_item.setText(billDetails.size());
-        }
 
-        btn_place_order.setOnClickListener(new View.OnClickListener() {
+        btn_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Common.currentBill == null) {
+
+                if (Common.currentBill == null || tv_count_item.getText().toString() == "0") {
                     Toast.makeText(getContext(), "Are you kidding me?! Thêm hàng vô đi rồi đặt thoải mái!", Toast.LENGTH_SHORT).show();
                 } else {
+                    final ProgressDialog progressDialog;
+                    progressDialog = new ProgressDialog(getContext());
+                    progressDialog.setMessage("Ordering...");
+                    progressDialog.show();
                     for (int i = 0; i < billDetails.size(); i++) {
                         service.updateBillDetail("" + billDetails.get(i).getId(), "" + billDetails.get(i).getQuantity(),
                                 "" + billDetails.get(i).getPrices()).enqueue(new Callback<JSONResponseBillDetail>() {
@@ -146,6 +164,7 @@ public class CartFragment extends Fragment {
                             Common.currentBill = null;
                             Log.e("delete cart", "" + billDetails.size());
                             CartFragment.this.getFragmentManager().beginTransaction().detach(CartFragment.this).attach(CartFragment.this).commit();
+                            progressDialog.dismiss();
                         }
 
                         @Override

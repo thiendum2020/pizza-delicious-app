@@ -89,7 +89,7 @@
             android:orientation="horizontal">
 
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/btn_decrease"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
@@ -112,7 +112,7 @@
                 android:textSize="16sp"
                 android:textStyle="normal" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/btn_increase"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
@@ -125,7 +125,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="65dp"
+                android:layout_marginLeft="75dp"
                 android:text="$ "
                 android:textColor="@color/black"
                 android:textSize="20sp"

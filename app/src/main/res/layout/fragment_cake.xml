@@ -10,21 +10,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="16dp"
-            android:background="@drawable/search_bg"
-            android:drawableLeft="@drawable/ic_baseline_search_24"
-            android:hint="Search..."
-            android:padding="10dp" />
-
         <LinearLayout
             android:id="@+id/layout_cake"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_margin="16dp"
             android:background="@drawable/bg_section"
             android:orientation="horizontal">
 
