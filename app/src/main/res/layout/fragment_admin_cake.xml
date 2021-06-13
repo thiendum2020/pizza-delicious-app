@@ -33,7 +33,6 @@
                 android:contentDescription="@null" />
 
             <TextView
-                android:id="@+id/tv_cake"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
                 android:layout_alignParentStart="true"

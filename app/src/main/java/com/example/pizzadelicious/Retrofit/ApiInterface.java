@@ -29,9 +29,21 @@ public interface ApiInterface {
     @GET("user")
     Call<JSONResponseAccounts> getAllUser();
 
+    @POST("user")
+    Call<JSONResponseAccounts> postUser(@Query("username") String username, @Query("password") String password,
+                                        @Query("name") String name, @Query("email") String email, @Query("address") String address,
+                                        @Query("phone") String phone, @Query("role") String role);
+
     @GET("user/{id}")
     Call<JSONResponseAccounts> getUserById(@Path("id") String id);
 
+    @PUT("user/{id}")
+    Call<JSONResponseAccounts> updateUser(@Path("id") String id, @Query("username") String username, @Query("password") String password,
+                                          @Query("name") String name, @Query("email") String email, @Query("address") String address,
+                                          @Query("phone") String phone, @Query("role") String role);
+
+    @DELETE("user/{id}")
+    Call<JSONResponseAccounts> deleteUser(@Path("id") String id);
 
     /*---PRODUCT--*/
     @GET("product/type/{id}")
@@ -42,15 +54,16 @@ public interface ApiInterface {
 
     @POST("product")
     @Multipart
-    Call<JSONResponseProduct> postProduct(@Query("name") String content, @Query("price") String price,
+    Call<JSONResponseProduct> postProduct(@Query("name") String name, @Query("price") String price,
                                           @Query("type_id") String type_id, @Part MultipartBody.Part file);
+
 
     @PUT("product/{id}")
     Call<JSONResponseProduct> updateProduct(@Path("id") String id, @Query("name") String name, @Query("price") String price,
                                             @Query("type_id") String type_id);
 
     @DELETE("product/{id}")
-    Call<JSONResponseProduct> deleteBProduct(@Path("id") String id);
+    Call<JSONResponseProduct> deleteProduct(@Path("id") String id);
 
 
     /*---BILL--*/
@@ -59,12 +72,15 @@ public interface ApiInterface {
 
     @GET("bill/note/created")
     Call<JSONResponseBill> getBillByNoteCreated();
+
     @GET("bill/note/waiting")
     Call<JSONResponseBill> getBillByNoteWaiting();
+
     @GET("bill/note/delivering")
     Call<JSONResponseBill> getBillByNoteDelivering();
-    @GET("bill/note/success")
-    Call<JSONResponseBill> getBillByNoteSuccess();
+
+    @GET("bill/note/completed")
+    Call<JSONResponseBill> getBillByNoteCompleted();
 
     @GET("bill")
     Call<JSONResponseBill> getAllBill();
@@ -75,6 +91,12 @@ public interface ApiInterface {
 
     @PUT("bill/{id}")
     Call<JSONResponseBill> updateBill(@Path("id") String id, @Query("note") String note, @Query("prices") String prices);
+
+    @PUT("bill/{id}")
+    Call<JSONResponseBill> receivedBill(@Path("id") String id, @Query("note") String note);
+
+    @PUT("bill/{id}")
+    Call<JSONResponseBill> deliveringBill(@Path("id") String id, @Query("note") String note);
 
     @DELETE("bill/{id}")
     Call<JSONResponseBill> deleteBill(@Path("id") String id);

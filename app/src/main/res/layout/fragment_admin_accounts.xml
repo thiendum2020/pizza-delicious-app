@@ -34,7 +34,6 @@
                 android:contentDescription="@null" />
 
             <TextView
-                android:id="@+id/tv_username"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
                 android:layout_alignParentStart="true"

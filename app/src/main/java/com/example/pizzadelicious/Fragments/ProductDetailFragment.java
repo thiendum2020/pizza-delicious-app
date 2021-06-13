@@ -1,4 +1,4 @@
-package com.example.pizzadelicious;
+package com.example.pizzadelicious.Fragments;
 
 import android.os.Bundle;
 
@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,8 +20,10 @@ import com.example.pizzadelicious.Models.JSONResponseBill;
 import com.example.pizzadelicious.Models.JSONResponseBillDetail;
 import com.example.pizzadelicious.Models.JSONResponseProduct;
 import com.example.pizzadelicious.Models.Product;
+import com.example.pizzadelicious.R;
 import com.example.pizzadelicious.Retrofit.ApiInterface;
 import com.example.pizzadelicious.Retrofit.Common;
+import com.example.pizzadelicious.Utils.IOnImageViewAdapterClickListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -37,7 +40,7 @@ public class ProductDetailFragment extends Fragment {
     CircleImageView product_img;
     TextView product_name, product_price, tv_quantity_item;
     Button btn_addToCart;
-    ImageButton btn_decrease, btn_increase;
+    ImageView btn_decrease, btn_increase;
     ApiInterface service;
     private Toolbar toolbar;
     private ArrayList<Product> products;
@@ -51,10 +54,13 @@ public class ProductDetailFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
+
+
     private void load(String productId) {
 
-        service.getProductById(""+productId).enqueue(new Callback<JSONResponseProduct>() {
+        service.getProductById("" + productId).enqueue(new Callback<JSONResponseProduct>() {
             @Override
             public void onResponse(Call<JSONResponseProduct> call, Response<JSONResponseProduct> response) {
                 JSONResponseProduct jsonResponseProduct = response.body();
@@ -67,6 +73,23 @@ public class ProductDetailFragment extends Fragment {
             @Override
             public void onFailure(Call<JSONResponseProduct> call, Throwable t) {
 
+            }
+        });
+
+        btn_decrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Integer.parseInt(tv_quantity_item.getText().toString()) > 1) {
+                    tv_quantity_item.setText("" + (Integer.parseInt(tv_quantity_item.getText().toString()) - 1));
+                }
+            }
+        });
+        btn_increase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Integer.parseInt(tv_quantity_item.getText().toString()) < 99) {
+                    tv_quantity_item.setText("" + (Integer.parseInt(tv_quantity_item.getText().toString()) + 1));
+                }
             }
         });
 
@@ -85,7 +108,7 @@ public class ProductDetailFragment extends Fragment {
                             Log.d("bill_ok ", "Create Bill OK!");
                             JSONResponseBill jsonResponseBill = response.body();
                             Common.currentBill = jsonResponseBill.getData().get(0);
-                            Log.d("bill ", ""+ Common.currentBill.getNote());
+                            Log.d("bill ", "" + Common.currentBill.getNote());
 
                             service.postBillDetail("" + tv_quantity_item.getText(), "" + totalPrices,
                                     "" + products.get(0).getId(), "" + Common.currentBill.getId()).enqueue(new Callback<JSONResponseBillDetail>() {
@@ -109,9 +132,8 @@ public class ProductDetailFragment extends Fragment {
                     });
 
 
-
                 } else {
-                    service.postBillDetail("" +tv_quantity_item.getText(), "" + totalPrices,
+                    service.postBillDetail("" + tv_quantity_item.getText(), "" + totalPrices,
                             "" + products.get(0).getId(), "" + Common.currentBill.getId()).enqueue(new Callback<JSONResponseBillDetail>() {
                         @Override
                         public void onResponse(Call<JSONResponseBillDetail> call, Response<JSONResponseBillDetail> response) {
@@ -143,8 +165,6 @@ public class ProductDetailFragment extends Fragment {
         btn_decrease = view.findViewById(R.id.btn_decrease);
         btn_increase = view.findViewById(R.id.btn_increase);
         tv_quantity_item = view.findViewById(R.id.tv_quantity_item);
-
-
 
 
         Bundle bundle = this.getArguments();

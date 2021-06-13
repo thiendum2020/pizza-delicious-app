@@ -1,60 +1,44 @@
 package com.example.pizzadelicious.Fragments;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.pizzadelicious.AdminActivity;
+import com.example.pizzadelicious.FragmentReplaceActivity;
+import com.example.pizzadelicious.MainActivity;
+import com.example.pizzadelicious.Models.JSONResponseAccounts;
+import com.example.pizzadelicious.Models.JSONResponseUser;
 import com.example.pizzadelicious.R;
+import com.example.pizzadelicious.Retrofit.ApiInterface;
+import com.example.pizzadelicious.Retrofit.Common;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SignUpFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+
 public class SignUpFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private TextView tv_login;
+    private EditText et_username, et_password, et_name, et_email, et_address, et_phone;
+    private Button btn_signUp;
+    ApiInterface service;
 
     public SignUpFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SignUpFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SignUpFragment newInstance(String param1, String param2) {
-        SignUpFragment fragment = new SignUpFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -62,5 +46,71 @@ public class SignUpFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_sign_up, container, false);
+    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        setControl(view);
+        setEvent();
+    }
+
+    private void setControl(View view) {
+        tv_login = view.findViewById(R.id.tv_login);
+        et_username = view.findViewById(R.id.et_username);
+        et_password = view.findViewById(R.id.et_password);
+        et_name = view.findViewById(R.id.et_name);
+        et_email = view.findViewById(R.id.et_email);
+        et_address = view.findViewById(R.id.et_address);
+        et_phone = view.findViewById(R.id.et_phone);
+        btn_signUp = view.findViewById(R.id.btn_signUp);
+
+    }
+    private void setEvent() {
+        service = Common.getGsonService();
+
+        tv_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((FragmentReplaceActivity) getActivity()).setFragment(new SignInFragment());
+            }
+        });
+
+        btn_signUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String username = et_username.getText().toString();
+                String password = et_password.getText().toString();
+                String name = et_name.getText().toString();
+                String email = et_email.getText().toString();
+                String address = et_address.getText().toString();
+                String phone = et_phone.getText().toString();
+
+
+                if(Common.isConnectedToInternet(getActivity().getBaseContext())){
+                    final ProgressDialog progressDialog;
+                    progressDialog = new ProgressDialog(getContext());
+                    progressDialog.setMessage("Waiting...");
+                    progressDialog.show();
+
+                    service.postUser(username, password, name, email, address, phone, "customer").enqueue(new Callback<JSONResponseAccounts>() {
+                        @Override
+                        public void onResponse(Call<JSONResponseAccounts> call, Response<JSONResponseAccounts> response) {
+                            Toast.makeText(getContext(), "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+                            ((FragmentReplaceActivity) getActivity()).setFragment(new SignInFragment());
+                        }
+
+                        @Override
+                        public void onFailure(Call<JSONResponseAccounts> call, Throwable t) {
+                            Toast.makeText(getContext(), "Đăng ký Không thành công. Vui lòng kiểm tra lại thông tin!", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+                        }
+                    });
+                }else{
+                    Toast.makeText(getActivity().getBaseContext(), "Vui lòng kiểm tra lại kết nối!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

@@ -4,7 +4,10 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.pizzadelicious.Adapters.AccountAdapter;
@@ -36,6 +40,7 @@ public class AdminAccountsFragment extends Fragment {
     RecyclerView recyclerView_accounts;
     ArrayList<User> accountList;
     ApiInterface service;
+    ImageButton btn_add, btn_back;
 
     public AdminAccountsFragment() {
         // Required empty public constructor
@@ -71,8 +76,6 @@ public class AdminAccountsFragment extends Fragment {
                     JSONResponseAccounts jsonResponseAccounts = response.body();
                     accountList = new ArrayList<>(Arrays.asList(jsonResponseAccounts.getData()));
 
-                    Log.e("status ",""+jsonResponseAccounts.getData().length);
-
                     AccountAdapter accountAdapter  = new AccountAdapter( accountList, AdminAccountsFragment.this);
 
                     recyclerView_accounts.setAdapter(accountAdapter);
@@ -85,18 +88,43 @@ public class AdminAccountsFragment extends Fragment {
                 }
             });
         }else {
-            Toast.makeText(getActivity(), "Please check your internet!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Please check your internet!", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void setControl(View view) {
-//        Toolbar toolbar = view.findViewById(R.id.toolbar);
-//        if (getActivity() != null) {
-//            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-//        }
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        if (getActivity() != null) {
+            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        }
 
         recyclerView_accounts = view.findViewById(R.id.recyclerView_accounts);
         recyclerView_accounts.setHasFixedSize(true);
         recyclerView_accounts.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+        btn_add = view.findViewById(R.id.btn_add);
+        btn_back = view.findViewById(R.id.btn_back);
+
+        btn_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment someFragment = new AdminInsertAccountFragment();
+                FragmentTransaction transaction = AdminAccountsFragment.this.getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameLayout, someFragment); // give your fragment container id in first parameter
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
+            }
+        });
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment someFragment = new DashboardFragment();
+                FragmentTransaction transaction = AdminAccountsFragment.this.getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameLayout, someFragment); // give your fragment container id in first parameter
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
+            }
+        });
     }
+
 }

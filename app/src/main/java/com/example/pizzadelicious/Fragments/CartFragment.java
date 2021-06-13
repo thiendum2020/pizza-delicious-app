@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,8 +41,10 @@ public class CartFragment extends Fragment {
     RecyclerView recyclerView_cart;
     ArrayList<BillDetail> billDetails;
     ApiInterface service;
-    TextView tv_total_bill, tv_count_item, tv_name_user, tv_phone_user, tv_address_user;
+    public TextView tv_total_bill;
+    TextView tv_count_item, tv_name_user, tv_phone_user, tv_address_user, tv_total;
     Button btn_order;
+    String isPrices;
 
     public CartFragment() {
         // Required empty public constructor
@@ -58,6 +61,18 @@ public class CartFragment extends Fragment {
 //            Log.e("sl item:", ""+billDetails.size());
 //            tv_count_item.setText(""+billDetails.size());
 //        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                tv_total.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        loadData();
+                    }
+                });
+                Log.e("click ", "1");
+            }
+        }, 1000);
     }
 
     @Override
@@ -92,7 +107,6 @@ public class CartFragment extends Fragment {
                         tv_count_item.setText(""+billDetails.size());
                         Log.e("total ", Common.totalBill.toString());
                         tv_total_bill.setText(Common.totalBill.toString());
-
                     }
 
                     @Override
@@ -120,6 +134,7 @@ public class CartFragment extends Fragment {
         tv_name_user = view.findViewById(R.id.tv_name_user);
         tv_phone_user = view.findViewById(R.id.tv_phone_user);
         tv_address_user = view.findViewById(R.id.tv_address_user);
+        tv_total = view.findViewById(R.id.tv_total);
 
         btn_order = view.findViewById(R.id.btn_order);
 
@@ -129,6 +144,13 @@ public class CartFragment extends Fragment {
     }
 
     private void setEvent() {
+
+        tv_total.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadData();
+            }
+        });
 
         btn_order.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,7 +184,6 @@ public class CartFragment extends Fragment {
                             Toast.makeText(getContext(), "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
                             billDetails.clear();
                             Common.currentBill = null;
-                            Log.e("delete cart", "" + billDetails.size());
                             CartFragment.this.getFragmentManager().beginTransaction().detach(CartFragment.this).attach(CartFragment.this).commit();
                             progressDialog.dismiss();
                         }

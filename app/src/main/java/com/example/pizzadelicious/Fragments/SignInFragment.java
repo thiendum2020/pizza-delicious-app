@@ -33,7 +33,7 @@ public class SignInFragment extends Fragment {
 
     private TextView tv_create;
     private EditText et_username, et_password;
-    private Button btn_signin;
+    private Button btn_signIn;
 
     ApiInterface service;
 
@@ -60,7 +60,7 @@ public class SignInFragment extends Fragment {
         tv_create = view.findViewById(R.id.tv_create);
         et_username = view.findViewById(R.id.et_username);
         et_password = view.findViewById(R.id.et_password);
-        btn_signin = view.findViewById(R.id.btn_signin);
+        btn_signIn = view.findViewById(R.id.btn_signIn);
 
     }
 
@@ -74,7 +74,7 @@ public class SignInFragment extends Fragment {
             }
         });
 
-        btn_signin.setOnClickListener(new View.OnClickListener() {
+        btn_signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String username = et_username.getText().toString();

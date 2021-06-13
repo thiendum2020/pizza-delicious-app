@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,18 +17,16 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pizzadelicious.Fragments.PizzaFragment;
-import com.example.pizzadelicious.Models.BillDetail;
 import com.example.pizzadelicious.Models.JSONResponseBill;
 import com.example.pizzadelicious.Models.JSONResponseBillDetail;
 import com.example.pizzadelicious.Models.Product;
-import com.example.pizzadelicious.ProductDetailFragment;
+import com.example.pizzadelicious.Fragments.ProductDetailFragment;
 import com.example.pizzadelicious.R;
 import com.example.pizzadelicious.Retrofit.ApiInterface;
 import com.example.pizzadelicious.Retrofit.Common;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -73,6 +70,7 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 Toast.makeText(pizzaFragment.getContext(), "Đã chọn: " + model.getName(), Toast.LENGTH_SHORT).show();
+
                 Bundle bundle = new Bundle();
                 Fragment someFragment = new ProductDetailFragment();
                 bundle.putString("productId", String.valueOf(list.get(position).getId()));

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".AdminInsertAccountFragment">
+    tools:context=".Fragments.AdminInsertAccountFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -76,7 +76,7 @@
         android:padding="16dp">
 
         <EditText
-            android:id="@+id/et_tenXe"
+            android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/bg_input"
@@ -173,7 +173,6 @@
             android:layout_marginLeft="10dp"
             android:background="@drawable/bg_input"
             android:hint="Role"
-            android:inputType="number"
             android:paddingLeft="10dp"
             android:textColor="@color/black"
             android:textColorHighlight="@color/black"

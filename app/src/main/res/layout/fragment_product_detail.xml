@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".ProductDetailFragment">
+    tools:context=".Fragments.ProductDetailFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -181,7 +181,7 @@ hard work gains success. Greatness will come."
         android:orientation="horizontal">
 
 
-        <ImageButton
+        <ImageView
             android:id="@+id/btn_decrease"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -204,7 +204,7 @@ hard work gains success. Greatness will come."
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/btn_increase"
             android:layout_width="20dp"
             android:layout_height="20dp"

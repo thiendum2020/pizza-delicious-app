@@ -2,6 +2,7 @@ package com.example.pizzadelicious.Adapters;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +13,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pizzadelicious.Fragments.CartFragment;
 import com.example.pizzadelicious.Fragments.PizzaFragment;
+import com.example.pizzadelicious.Fragments.ProductDetailFragment;
 import com.example.pizzadelicious.Models.Bill;
 import com.example.pizzadelicious.Models.BillDetail;
 import com.example.pizzadelicious.Models.JSONResponseBillDetail;
@@ -28,6 +31,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,7 +39,7 @@ import retrofit2.Response;
 
 public class BillDetailAdapter extends RecyclerView.Adapter<BillDetailAdapter.ViewHolder> {
     private ArrayList<BillDetail> list;
-    CartFragment cartFragment;
+    private CartFragment cartFragment;
     private Context context;
     ApiInterface service;
 
@@ -87,28 +91,84 @@ public class BillDetailAdapter extends RecyclerView.Adapter<BillDetailAdapter.Vi
                 });
             }
         });
-        //Common.currentBill.setPrices(""+(Integer.parseInt(model.getProduct().getPrice())*Integer.parseInt(model.getQuantity())));
+
         //event
         holder.setListener((view, position1, isDecrease, isIncrease) -> {
             if (isDecrease) {
                 if (Integer.parseInt(holder.tv_quantity_item.getText().toString()) > 1) {
-//                    Common.totalBill = Common.totalBill - Integer.parseInt(model.getPrices());
                     holder.tv_quantity_item.setText("" + (Integer.parseInt(holder.tv_quantity_item.getText().toString()) - 1));
-                    Log.d("1: ", "" + (Integer.parseInt(holder.tv_quantity_item.getText().toString()) - 1));
+                    //Update total prices
+                    holder.tv_total_prices_item.setText("" + (Integer.parseInt(holder.tv_quantity_item.getText().toString()) * Integer.parseInt(model.getProduct().getPrice())));
+                    //Run API update bill detail
+                    service.updateBillDetail(""+ model.getId(), ""+holder.tv_quantity_item.getText().toString(),""+ holder.tv_total_prices_item.getText().toString())
+                            .enqueue(new Callback<JSONResponseBillDetail>() {
+                                @Override
+                                public void onResponse(Call<JSONResponseBillDetail> call, Response<JSONResponseBillDetail> response) {
+                                    Log.e("update sp "+ model.getId(), "OK!");
+
+                                }
+                                @Override
+                                public void onFailure(Call<JSONResponseBillDetail> call, Throwable t) {
+
+                                }
+                            });
+                    Common.totalBill = 0;
+                    service.getBillDetailByBillId(""+Common.currentBill.getId()).enqueue(new Callback<JSONResponseBillDetail>() {
+                        @Override
+                        public void onResponse(Call<JSONResponseBillDetail> call, Response<JSONResponseBillDetail> response) {
+                            JSONResponseBillDetail jsonResponseBillDetail = response.body();
+                            ArrayList<BillDetail> billDetails = new ArrayList<>(Arrays.asList(jsonResponseBillDetail.getData()));
+                            for (int i = 0; i < billDetails.size(); i++) {
+                                Common.totalBill = Common.totalBill + Integer.parseInt(billDetails.get(i).getPrices());
+                            }
+                            cartFragment.tv_total_bill.setText(""+ Common.totalBill.toString());
+                        }
+
+                        @Override
+                        public void onFailure(Call<JSONResponseBillDetail> call, Throwable t) {
+
+                        }
+                    });
                 }
             } else {
                 if (isIncrease) {
                     if (Integer.parseInt(holder.tv_quantity_item.getText().toString()) < 99) {
-//                        Common.totalBill = Common.totalBill + Integer.parseInt(model.getPrices());
                         holder.tv_quantity_item.setText("" + (Integer.parseInt(holder.tv_quantity_item.getText().toString()) + 1));
+                        //Update total prices
+                        holder.tv_total_prices_item.setText("" + (Integer.parseInt(holder.tv_quantity_item.getText().toString()) * Integer.parseInt(model.getProduct().getPrice())));
+                        //Run API update bill detail
+                        service.updateBillDetail(""+ model.getId(), ""+holder.tv_quantity_item.getText().toString(),""+ holder.tv_total_prices_item.getText().toString())
+                                .enqueue(new Callback<JSONResponseBillDetail>() {
+                                    @Override
+                                    public void onResponse(Call<JSONResponseBillDetail> call, Response<JSONResponseBillDetail> response) {
+                                        Log.e("update sp "+ model.getId(), "OK!");
 
-                        Log.d("2: ", "" + (Integer.parseInt(holder.tv_quantity_item.getText().toString()) + 1));
+                                    }
+                                    @Override
+                                    public void onFailure(Call<JSONResponseBillDetail> call, Throwable t) {
+
+                                    }
+                                });
+                        Common.totalBill = 0;
+                        service.getBillDetailByBillId(""+Common.currentBill.getId()).enqueue(new Callback<JSONResponseBillDetail>() {
+                            @Override
+                            public void onResponse(Call<JSONResponseBillDetail> call, Response<JSONResponseBillDetail> response) {
+                                JSONResponseBillDetail jsonResponseBillDetail = response.body();
+                                ArrayList<BillDetail> billDetails = new ArrayList<>(Arrays.asList(jsonResponseBillDetail.getData()));
+                                for (int i = 0; i < billDetails.size(); i++) {
+                                    Common.totalBill = Common.totalBill + Integer.parseInt(billDetails.get(i).getPrices());
+                                }
+                                cartFragment.tv_total_bill.setText(""+ Common.totalBill.toString());
+                            }
+
+                            @Override
+                            public void onFailure(Call<JSONResponseBillDetail> call, Throwable t) {
+
+                            }
+                        });
                     }
                 }
             }
-            //Update total prices
-            holder.tv_total_prices_item.setText("" + (Integer.parseInt(holder.tv_quantity_item.getText().toString()) * Integer.parseInt(model.getProduct().getPrice())));
-            //Run API update bill detail
 
         });
     }

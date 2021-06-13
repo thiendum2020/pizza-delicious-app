@@ -3,7 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="des_signin">Please enter your information below in order to login to your account.</string>
+    <string name="des_signin">Sign into your account to access thousands of product.</string>
     <string name="tv_pass"><u>Skip</u></string>
     <string name="btn_signin">Sign In</string>
 </resources>

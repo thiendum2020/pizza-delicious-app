@@ -4,14 +4,17 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.pizzadelicious.Adapters.AdminPizzaAdapter;
@@ -33,6 +36,7 @@ public class AdminPizzaFragment extends Fragment {
     RecyclerView recyclerView_pizza;
     ArrayList<Product> pizzaList;
     ApiInterface service;
+    ImageButton btn_back, btn_add;
 
     public AdminPizzaFragment() {
         // Required empty public constructor
@@ -57,15 +61,16 @@ public class AdminPizzaFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_admin_pizza, container, false);
     }
+
     private void loadData() {
         //Pizza Recycler View
-        if (Common.isConnectedToInternet(getActivity().getBaseContext())){
+        if (Common.isConnectedToInternet(getActivity().getBaseContext())) {
             service.getProductByType("1").enqueue(new Callback<JSONResponseProduct>() {
                 @Override
                 public void onResponse(Call<JSONResponseProduct> call, Response<JSONResponseProduct> response) {
                     JSONResponseProduct jsonResponsePizza = response.body();
                     pizzaList = new ArrayList<>(Arrays.asList(jsonResponsePizza.getData()));
-                    AdminPizzaAdapter adminPizzaAdapter  = new AdminPizzaAdapter( pizzaList, AdminPizzaFragment.this);
+                    AdminPizzaAdapter adminPizzaAdapter = new AdminPizzaAdapter(pizzaList, AdminPizzaFragment.this);
                     recyclerView_pizza.setAdapter(adminPizzaAdapter);
                     adminPizzaAdapter.notifyDataSetChanged();
                 }
@@ -75,18 +80,42 @@ public class AdminPizzaFragment extends Fragment {
 
                 }
             });
-        }else {
+        } else {
             Toast.makeText(getActivity(), "Please check your internet!!", Toast.LENGTH_SHORT).show();
         }
     }
+
     private void setControl(View view) {
-//        Toolbar toolbar = view.findViewById(R.id.toolbar);
-//        if (getActivity() != null) {
-//            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-//        }
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        if (getActivity() != null) {
+            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        }
 
         recyclerView_pizza = view.findViewById(R.id.recyclerView_pizza);
         recyclerView_pizza.setHasFixedSize(true);
         recyclerView_pizza.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        btn_back = view.findViewById(R.id.btn_back);
+        btn_add = view.findViewById(R.id.btn_add);
+
+        btn_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment someFragment = new AdminInsertProductFragment();
+                FragmentTransaction transaction = AdminPizzaFragment.this.getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameLayout, someFragment); // give your fragment container id in first parameter
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
+            }
+        });
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment someFragment = new DashboardFragment();
+                FragmentTransaction transaction = AdminPizzaFragment.this.getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameLayout, someFragment); // give your fragment container id in first parameter
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
+            }
+        });
     }
 }
