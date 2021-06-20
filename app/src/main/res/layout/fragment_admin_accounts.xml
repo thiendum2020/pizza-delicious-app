@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#A3E2ADFF"
     android:orientation="vertical"
     tools:context=".Fragments.AdminAccountsFragment">
 
@@ -22,16 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize">
 
-            <ImageButton
-                android:id="@+id/btn_back"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/ic_baseline_arrow_back_24"
-                android:contentDescription="@null" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -43,9 +33,21 @@
                 android:fontFamily="@font/montserrat_medium"
                 android:gravity="center"
                 android:text="Accounts"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
+                android:background="@drawable/accounts_bg_title"
                 android:textSize="18sp"
                 android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/ic_baseline_arrow_back_24"
+                android:contentDescription="@null" />
 
             <ImageButton
                 android:id="@+id/btn_add"

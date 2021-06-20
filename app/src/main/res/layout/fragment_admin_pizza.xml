@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#B5F87823"
     android:orientation="vertical"
     tools:context=".Fragments.AdminPizzaFragment">
 
@@ -21,16 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize">
 
-            <ImageButton
-                android:id="@+id/btn_back"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/ic_baseline_arrow_back_24"
-                android:contentDescription="@null" />
+
 
             <TextView
                 android:id="@+id/tv_pizza"
@@ -43,9 +34,21 @@
                 android:fontFamily="@font/montserrat_medium"
                 android:gravity="center"
                 android:text="Pizza"
+                android:background="@drawable/pizza_bg"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/ic_baseline_arrow_back_24"
+                android:contentDescription="@null" />
 
             <ImageButton
                 android:id="@+id/btn_add"

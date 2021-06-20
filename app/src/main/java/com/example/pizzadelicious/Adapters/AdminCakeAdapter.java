@@ -3,6 +3,8 @@ package com.example.pizzadelicious.Adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +16,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pizzadelicious.Fragments.AdminCakeFragment;
+import com.example.pizzadelicious.Fragments.AdminEditAccountFragment;
+import com.example.pizzadelicious.Fragments.AdminEditProductFragment;
 import com.example.pizzadelicious.Fragments.AdminPizzaFragment;
 import com.example.pizzadelicious.Models.JSONResponseAccounts;
 import com.example.pizzadelicious.Models.JSONResponseProduct;
@@ -67,6 +73,17 @@ public class AdminCakeAdapter extends RecyclerView.Adapter<AdminCakeAdapter.View
             @Override
             public void onClick(View v) {
                 Toast.makeText(adminCakeFragment.getContext(), "Đã chọn: " + model.getName(), Toast.LENGTH_SHORT).show();
+                Bundle bundle = new Bundle();
+                Fragment someFragment = new AdminEditProductFragment();
+                ///chưa hiểu về id
+                bundle.putString("productId", String.valueOf(model.getId()));
+                someFragment.setArguments(bundle);
+                Toast.makeText(adminCakeFragment.getContext(), "Đã chọn: " + model.getName(), Toast.LENGTH_SHORT).show();
+                Log.d("id", "onResponse: " +model.getId().toString());
+                FragmentTransaction transaction = adminCakeFragment.getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameLayout, someFragment ); // give your fragment container id in first parameter
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
             }
         });
         holder.btn_delete.setOnClickListener(new View.OnClickListener() {
