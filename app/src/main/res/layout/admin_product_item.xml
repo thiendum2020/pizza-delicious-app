@@ -4,10 +4,10 @@
     android:id="@+id/admin_product_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="5dp"
+    android:layout_marginBottom="10dp"
     android:background="@drawable/bg_account_item"
     android:orientation="horizontal"
-    android:padding="5dp">
+    android:padding="10dp">
 
     <ImageView
         android:id="@+id/img_item"
@@ -89,7 +89,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tv__price_item"
+                android:id="@+id/tv_price_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

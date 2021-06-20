@@ -65,7 +65,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
     public void onBindViewHolder(@NonNull AccountAdapter.ViewHolder holder, int position) {
         User model = list.get(position);
 
-//        holder.tv_id.setText(model.getId());
+        holder.tv_id.setText(model.getId());
         holder.tv_name.setText(model.getName());
         holder.tv_email.setText(model.getEmail());
         holder.tv_role.setText(model.getRole());

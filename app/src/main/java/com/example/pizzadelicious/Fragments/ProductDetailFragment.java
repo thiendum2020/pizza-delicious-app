@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +39,7 @@ import retrofit2.Response;
 public class ProductDetailFragment extends Fragment {
 
     CircleImageView product_img;
+    ImageButton btn_back;
     TextView product_name, product_price, tv_quantity_item;
     Button btn_addToCart;
     ImageView btn_decrease, btn_increase;
@@ -59,7 +61,6 @@ public class ProductDetailFragment extends Fragment {
 
 
     private void load(String productId) {
-
         service.getProductById("" + productId).enqueue(new Callback<JSONResponseProduct>() {
             @Override
             public void onResponse(Call<JSONResponseProduct> call, Response<JSONResponseProduct> response) {
@@ -68,6 +69,26 @@ public class ProductDetailFragment extends Fragment {
                 Picasso.get().load("" + products.get(0).getImage()).into(product_img);
                 product_name.setText(products.get(0).getName());
                 product_price.setText(products.get(0).getPrice());
+
+                btn_back.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(products.get(0).getType().getId().equals("1")){
+                            Fragment someFragment = new PizzaFragment();
+                            FragmentTransaction transaction = ProductDetailFragment.this.getFragmentManager().beginTransaction();
+                            transaction.replace(R.id.frameLayout, someFragment); // give your fragment container id in first parameter
+                            transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                            transaction.commit();
+                        }
+                        else{
+                            Fragment someFragment = new CakeFragment();
+                            FragmentTransaction transaction = ProductDetailFragment.this.getFragmentManager().beginTransaction();
+                            transaction.replace(R.id.frameLayout, someFragment); // give your fragment container id in first parameter
+                            transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                            transaction.commit();
+                        }
+                    }
+                });
             }
 
             @Override
@@ -164,6 +185,7 @@ public class ProductDetailFragment extends Fragment {
         btn_addToCart = view.findViewById(R.id.btn_addToCart);
         btn_decrease = view.findViewById(R.id.btn_decrease);
         btn_increase = view.findViewById(R.id.btn_increase);
+        btn_back = view.findViewById(R.id.btn_back);
         tv_quantity_item = view.findViewById(R.id.tv_quantity_item);
 
 

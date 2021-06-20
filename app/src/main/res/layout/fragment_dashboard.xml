@@ -13,16 +13,32 @@
         android:layout_marginRight="16dp"
         android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/btn_back_to_home"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/logo" />
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btn_back_to_home"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_baseline_home_24" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="4dp"
+                android:gravity="center_vertical"
+                android:text="Back to store"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
+            android:layout_marginLeft="150dp"
             android:orientation="vertical">
 
             <TextView
@@ -30,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="Hello,"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="normal" />
 
@@ -39,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ADMIN"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -209,7 +225,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="60dp">
+            android:layout_marginTop="40dp">
 
             <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="match_parent"

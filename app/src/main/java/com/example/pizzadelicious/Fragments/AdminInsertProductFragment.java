@@ -164,7 +164,7 @@ public class AdminInsertProductFragment extends Fragment {
                             @Override
                             public void onFailure(Call<JSONResponseProduct> call, Throwable t) {
                                 progressDialog.dismiss();
-                                Toast.makeText(getActivity(), "Insert Product sax failed!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Insert Product failed!", Toast.LENGTH_SHORT).show();
                             }
                         });
                     } else if (et_type.getText().toString().equals("cake") || et_type.getText().toString().equals("Cake")) {
@@ -200,6 +200,9 @@ public class AdminInsertProductFragment extends Fragment {
                                 Toast.makeText(getActivity(), "Insert Product failed!", Toast.LENGTH_SHORT).show();
                             }
                         });
+                    }
+                    else{
+                        Toast.makeText(getContext(), "Please input type again!", Toast.LENGTH_SHORT).show();
                     }
 
                 } else if (IMAGE_PATH.equals("")) {

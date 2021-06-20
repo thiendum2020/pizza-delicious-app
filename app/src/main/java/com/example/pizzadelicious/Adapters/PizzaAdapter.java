@@ -63,7 +63,6 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.ViewHolder> 
         Picasso.get().load(model.getImage())
                 .into(holder.product_img);
         holder.product_name.setText(model.getName());
-//        holder.pizza_description.setText(model.getDescription());
         holder.product_price.setText(model.getPrice());
 
         product_item.setOnClickListener(new View.OnClickListener() {

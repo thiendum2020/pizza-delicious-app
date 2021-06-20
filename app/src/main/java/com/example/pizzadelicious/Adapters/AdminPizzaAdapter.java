@@ -3,6 +3,8 @@ package com.example.pizzadelicious.Adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pizzadelicious.Fragments.AdminEditAccountFragment;
+import com.example.pizzadelicious.Fragments.AdminEditProductFragment;
 import com.example.pizzadelicious.Fragments.AdminPizzaFragment;
 import com.example.pizzadelicious.Models.JSONResponseProduct;
 import com.example.pizzadelicious.Models.Product;
@@ -59,13 +65,23 @@ public class AdminPizzaAdapter extends RecyclerView.Adapter<AdminPizzaAdapter.Vi
 
         holder.tv_id_item.setText(model.getId());
         holder.tv_name_item.setText(model.getName());
-        holder.tv__price_item.setText(model.getPrice());
+        holder.tv_price_item.setText(model.getPrice());
         Picasso.get().load(model.getImage())
                 .into(holder.img_item);
+
         admin_product_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                Fragment someFragment = new AdminEditProductFragment();
+                bundle.putString("productId", String.valueOf(model.getId()));
+                someFragment.setArguments(bundle);
                 Toast.makeText(adminPizzaFragment.getContext(), "Đã chọn: " + model.getName(), Toast.LENGTH_SHORT).show();
+                Log.d("id", "onResponse: " +model.getId().toString());
+                FragmentTransaction transaction = adminPizzaFragment.getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameLayout, someFragment ); // give your fragment container id in first parameter
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
             }
         });
         holder.btn_delete.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +128,7 @@ public class AdminPizzaAdapter extends RecyclerView.Adapter<AdminPizzaAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_id_item, tv_name_item, tv__price_item;
+        TextView tv_id_item, tv_name_item, tv_price_item;
         ImageButton btn_delete;
         ImageView img_item;
 
@@ -120,7 +136,7 @@ public class AdminPizzaAdapter extends RecyclerView.Adapter<AdminPizzaAdapter.Vi
             super(itemView);
             tv_id_item = itemView.findViewById(R.id.tv_id_item);
             tv_name_item = itemView.findViewById(R.id.tv_name_item);
-            tv__price_item = itemView.findViewById(R.id.tv__price_item);
+            tv_price_item = itemView.findViewById(R.id.tv_price_item);
             img_item = itemView.findViewById(R.id.img_item);
             btn_delete = itemView.findViewById(R.id.btn_delete);
 

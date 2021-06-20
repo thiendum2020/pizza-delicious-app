@@ -4,12 +4,12 @@ public class Type {
     private String id;
     private String name;
 
-    public Type() {
-    }
-
     public Type(String id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Type() {
     }
 
     public String getId() {

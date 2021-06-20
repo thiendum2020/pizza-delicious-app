@@ -21,7 +21,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pizzadelicious.Fragments.AdminCakeFragment;
-import com.example.pizzadelicious.Fragments.AdminEditAccountFragment;
 import com.example.pizzadelicious.Fragments.AdminEditProductFragment;
 import com.example.pizzadelicious.Fragments.AdminPizzaFragment;
 import com.example.pizzadelicious.Models.JSONResponseAccounts;
@@ -65,17 +64,15 @@ public class AdminCakeAdapter extends RecyclerView.Adapter<AdminCakeAdapter.View
 
         holder.tv_id_item.setText(model.getId());
         holder.tv_name_item.setText(model.getName());
-        holder.tv__price_item.setText(model.getPrice());
+        holder.tv_price_item.setText(model.getPrice());
         Picasso.get().load(model.getImage())
                 .into(holder.img_item);
 
         admin_product_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(adminCakeFragment.getContext(), "Đã chọn: " + model.getName(), Toast.LENGTH_SHORT).show();
                 Bundle bundle = new Bundle();
                 Fragment someFragment = new AdminEditProductFragment();
-                ///chưa hiểu về id
                 bundle.putString("productId", String.valueOf(model.getId()));
                 someFragment.setArguments(bundle);
                 Toast.makeText(adminCakeFragment.getContext(), "Đã chọn: " + model.getName(), Toast.LENGTH_SHORT).show();
@@ -130,7 +127,7 @@ public class AdminCakeAdapter extends RecyclerView.Adapter<AdminCakeAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_id_item, tv_name_item, tv__price_item;
+        TextView tv_id_item, tv_name_item, tv_price_item;
         ImageButton btn_delete;
         ImageView img_item;
 
@@ -138,7 +135,7 @@ public class AdminCakeAdapter extends RecyclerView.Adapter<AdminCakeAdapter.View
             super(itemView);
             tv_id_item = itemView.findViewById(R.id.tv_id_item);
             tv_name_item = itemView.findViewById(R.id.tv_name_item);
-            tv__price_item = itemView.findViewById(R.id.tv__price_item);
+            tv_price_item = itemView.findViewById(R.id.tv_price_item);
             img_item = itemView.findViewById(R.id.img_item);
             btn_delete = itemView.findViewById(R.id.btn_delete);
 
