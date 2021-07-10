@@ -37,6 +37,9 @@ public interface ApiInterface {
     @GET("user/{id}")
     Call<JSONResponseAccounts> getUserById(@Path("id") String id);
 
+    @GET("user/{id}")
+    Call<JSONResponseUser> getUserCurrent(@Path("id") String id);
+
     @PUT("user/{id}")
     Call<JSONResponseAccounts> updateUser(@Path("id") String id, @Query("username") String username, @Query("password") String password,
                                           @Query("name") String name, @Query("email") String email, @Query("address") String address,

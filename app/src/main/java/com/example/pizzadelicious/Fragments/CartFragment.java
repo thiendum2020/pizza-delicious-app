@@ -95,7 +95,7 @@ public class CartFragment extends Fragment {
                     public void onResponse(Call<JSONResponseBillDetail> call, Response<JSONResponseBillDetail> response) {
                         JSONResponseBillDetail jsonResponseBillDetail = response.body();
                         billDetails = new ArrayList<>(Arrays.asList(jsonResponseBillDetail.getData()));
-                        Log.e("status ", "" + jsonResponseBillDetail.getData().length);
+
 
                         BillDetailAdapter billDetailAdapter = new BillDetailAdapter(billDetails, CartFragment.this);
                         recyclerView_cart.setAdapter(billDetailAdapter);

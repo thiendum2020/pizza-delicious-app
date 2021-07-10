@@ -1,6 +1,7 @@
 package com.example.pizzadelicious.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,19 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         holder.tv_prices.setText(""+model.getPrices());
         holder.tv_name.setText(""+model.getUser().getName());
         holder.tv_address.setText(""+model.getUser().getAddress());
+
+        if(holder.tv_note.getText().equals("created")){
+            holder.tv_note.setTextColor(Color.parseColor("#AAA3A3"));
+        }
+        if(holder.tv_note.getText().equals("waiting")){
+            holder.tv_note.setTextColor(Color.parseColor("#039BE5"));
+        }
+        if(holder.tv_note.getText().equals("delivering")){
+            holder.tv_note.setTextColor(Color.parseColor("#F4511E"));
+        }
+        if(holder.tv_note.getText().equals("completed")){
+            holder.tv_note.setTextColor(Color.parseColor("#00FF0B"));
+        }
 
         if(model.getNote().equals("delivering")){
             holder.btn_received.setVisibility(View.VISIBLE);

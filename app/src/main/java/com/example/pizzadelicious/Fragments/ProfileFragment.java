@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.pizzadelicious.EditProfileFragment;
 import com.example.pizzadelicious.OnBoardActivity;
 import com.example.pizzadelicious.R;
 import com.example.pizzadelicious.Retrofit.Common;
@@ -82,7 +83,16 @@ public class ProfileFragment extends Fragment {
                 transaction.commit();
             }
         });
-
+        btn_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment someFragment = new EditProfileFragment();
+                FragmentTransaction transaction = ProfileFragment.this.getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameLayout, someFragment); // give your fragment container id in first parameter
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
+            }
+        });
         tv_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,6 +105,7 @@ public class ProfileFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         // Do nothing but close the dialog
                         dialog.dismiss();
+
                         Common.currentUser = null;
 
                         startActivity(new Intent(getContext(), OnBoardActivity.class));
