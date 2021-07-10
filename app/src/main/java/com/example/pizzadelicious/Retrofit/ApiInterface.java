@@ -117,21 +117,4 @@ public interface ApiInterface {
     Call<JSONResponseBillDetail> deleteBillDetail(@Path("id") String id);
 
 
-//
-//
-//    @POST("post")
-//    @Multipart
-//    Call<JSONResponsePost> addPost(@Header("APIKEY") String key, @Query("content") String content,
-//                                   @Part MultipartBody.Part file, @Query("user_id") String user_id);
-//
-//    @PUT("post/{id}")
-//    Call<JSONResponsePost> updatePost(@Header("APIKEY") String key, @Path("id") String id, @Query("content") String content);
-//
-//
-//    @GET("post/{id}")
-//    Call<JSONResponsePost> getDetailPost(@Header("APIKEY") String key, @Path("id") String id);
-//
-//    @DELETE("post/{id}")
-//    Call<JSONResponsePost> deletePost(@Header("APIKEY") String key, @Path("id") String id);
-
 }
