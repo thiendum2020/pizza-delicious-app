@@ -67,7 +67,7 @@ public class CakeFragment extends Fragment {
                 @Override
                 public void onResponse(Call<JSONResponseProduct> call, Response<JSONResponseProduct> response) {
                     JSONResponseProduct jsonResponseCake = response.body();
-                    cakeList = new ArrayList<>(Arrays.asList(jsonResponseCake.getData()));
+                    cakeList = jsonResponseCake.getData();
                     CakeAdapter cakeAdapter  = new CakeAdapter( cakeList, CakeFragment.this);
 
                     GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);

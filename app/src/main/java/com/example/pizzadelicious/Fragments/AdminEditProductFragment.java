@@ -119,12 +119,12 @@ public class AdminEditProductFragment extends Fragment {
             @Override
             public void onResponse(Call<JSONResponseProduct> call, Response<JSONResponseProduct> response) {
                 JSONResponseProduct jsonResponseProduct = response.body();
-                products = new ArrayList<>(Arrays.asList(jsonResponseProduct.getData()));
+                products = jsonResponseProduct.getData();
                 Log.d("idP", "onResponse: " + products.get(0).getId());
                 et_name.setText(products.get(0).getName());
                 et_price.setText(products.get(0).getPrice());
 //                et_type.setText(products.get(0).getType().getId());
-                productTypeId = products.get(0).getType().getId();
+                productTypeId = products.get(0).getType_id();
                 checkRadio(productTypeId);
                 Picasso.get().load("" + products.get(0).getImage())
                         .into(imageProduct);
@@ -141,7 +141,7 @@ public class AdminEditProductFragment extends Fragment {
                             @Override
                             public void onResponse(Call<JSONResponseProduct> call, Response<JSONResponseProduct> response) {
                                 Toast.makeText(getActivity(), "Updated   successfully!", Toast.LENGTH_SHORT).show();
-                                if(products.get(0).getType().getId().equals("1")){
+                                if(products.get(0).getType_id().equals("1")){
                                     Fragment someFragment = new AdminPizzaFragment();
                                     FragmentTransaction transaction = AdminEditProductFragment.this.getFragmentManager().beginTransaction();
                                     transaction.replace(R.id.frameLayout, someFragment); // give your fragment container id in first parameter

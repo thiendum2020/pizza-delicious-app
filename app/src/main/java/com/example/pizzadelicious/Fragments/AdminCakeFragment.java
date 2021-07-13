@@ -67,7 +67,7 @@ public class AdminCakeFragment extends Fragment {
                 @Override
                 public void onResponse(Call<JSONResponseProduct> call, Response<JSONResponseProduct> response) {
                     JSONResponseProduct jsonResponseCake = response.body();
-                    cakeList = new ArrayList<>(Arrays.asList(jsonResponseCake.getData()));
+                    cakeList = jsonResponseCake.getData();
                     AdminCakeAdapter adminCakeAdapter = new AdminCakeAdapter(cakeList, AdminCakeFragment.this);
                     recyclerView_cake.setAdapter(adminCakeAdapter);
                     adminCakeAdapter.notifyDataSetChanged();

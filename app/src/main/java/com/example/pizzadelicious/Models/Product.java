@@ -4,17 +4,17 @@ public class Product {
     private String id;
     private String name;
     private String price;
-    private Type type;
+    private String type_id;
     private String image;
 
     public Product() {
     }
 
-    public Product(String id, String name, String price, Type type, String image) {
+    public Product(String id, String name, String price, String type, String image) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.type = type;
+        this.type_id = type_id;
         this.image = image;
     }
 
@@ -42,12 +42,12 @@ public class Product {
         this.price = price;
     }
 
-    public Type getType() {
-        return type;
+    public String getType_id() {
+        return type_id;
     }
 
-    public void setType(Type type) {
-        this.type = type;
+    public void setType_id(Type type) {
+        this.type_id = type_id;
     }
 
     public String getImage() {

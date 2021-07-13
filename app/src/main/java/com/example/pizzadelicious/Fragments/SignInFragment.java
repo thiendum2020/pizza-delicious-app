@@ -87,8 +87,17 @@ public class SignInFragment extends Fragment {
                     service.getUserLogin(username, password).enqueue(new Callback<JSONResponseUser>() {
                         @Override
                         public void onResponse(Call<JSONResponseUser> call, Response<JSONResponseUser> response) {
-                            if(Integer.parseInt(response.body().getStatus())==0)
-                            {
+                            Log.d("loginF", ""+ response.body().getStatus());
+                            if(Integer.parseInt(response.body().getStatus())==1){
+                                Toast.makeText(getContext(), "Tên tài khoản chưa được đăng ký!", Toast.LENGTH_SHORT).show();
+
+                            }
+                            Log.d("loginA", ""+ response.body().getStatus());
+                            if(Integer.parseInt(response.body().getStatus())==1){
+                                Toast.makeText(getContext(), "Sai mật khẩu!", Toast.LENGTH_SHORT).show();
+                            }
+
+                            if(Integer.parseInt(response.body().getStatus())==1){
                                 Common.currentUser = response.body().getData();
                                 Common.currentBill = null;
                                 Toast.makeText(getContext(), "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
@@ -103,12 +112,8 @@ public class SignInFragment extends Fragment {
                                     startActivity(new Intent(getContext(), MainActivity.class));
                                 }
 
-                            }else if(Integer.parseInt(response.body().getStatus())==1){
-                                Toast.makeText(getContext(), "Tên tài khoản chưa được đăng ký!", Toast.LENGTH_SHORT).show();
-
-                            }else if(Integer.parseInt(response.body().getStatus())==2){
-                                Toast.makeText(getContext(), "Sai mật khẩu!", Toast.LENGTH_SHORT).show();
                             }
+
                         }
                         @Override
                         public void onFailure(Call<JSONResponseUser> call, Throwable t) {

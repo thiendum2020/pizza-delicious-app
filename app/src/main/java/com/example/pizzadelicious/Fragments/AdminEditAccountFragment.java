@@ -95,8 +95,8 @@ public class AdminEditAccountFragment extends Fragment {
             @Override
             public void onResponse(Call<JSONResponseAccounts> call, Response<JSONResponseAccounts> response) {
                 JSONResponseAccounts jsonResponseAccounts = response.body();
-                users = new ArrayList<>(Arrays.asList(jsonResponseAccounts.getData()));
-                Log.d("id", "onResponse: " + accountId);
+                users = jsonResponseAccounts.getData();
+                Log.d("users", " " +users);
                 et_username.setText("" + users.get(0).getUsername());
                 et_password.setText("" + users.get(0).getPassword());
                 et_name.setText("" + users.get(0).getName());

@@ -82,7 +82,7 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onResponse(Call<JSONResponseAccounts> call, Response<JSONResponseAccounts> response) {
                 JSONResponseAccounts jsonResponseAccounts = response.body();
-                String count_accounts = jsonResponseAccounts.getData().length + "";
+                String count_accounts = jsonResponseAccounts.getData().size() + "";
                 tv_count_accounts.setText(count_accounts);
             }
 
@@ -95,7 +95,7 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onResponse(Call<JSONResponseProduct> call, Response<JSONResponseProduct> response) {
                 JSONResponseProduct jsonResponseProduct = response.body();
-                String count_pizza = jsonResponseProduct.getData().length + "";
+                String count_pizza = jsonResponseProduct.getData().size() + "";
                 tv_count_pizza.setText(count_pizza);
             }
 
@@ -108,7 +108,7 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onResponse(Call<JSONResponseProduct> call, Response<JSONResponseProduct> response) {
                 JSONResponseProduct jsonResponseProduct = response.body();
-                String count_cake = jsonResponseProduct.getData().length + "";
+                String count_cake = jsonResponseProduct.getData().size()+ "";
                 tv_count_cake.setText(count_cake);
             }
 

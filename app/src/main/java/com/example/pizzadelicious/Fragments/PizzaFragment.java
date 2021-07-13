@@ -70,7 +70,7 @@ public class PizzaFragment extends Fragment {
                 @Override
                 public void onResponse(Call<JSONResponseProduct> call, Response<JSONResponseProduct> response) {
                     JSONResponseProduct jsonResponsePizza = response.body();
-                    pizzaList = new ArrayList<>(Arrays.asList(jsonResponsePizza.getData()));
+                    pizzaList = jsonResponsePizza.getData();
                     PizzaAdapter pizzaAdapter  = new PizzaAdapter( pizzaList, PizzaFragment.this);
 
                     GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);

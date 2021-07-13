@@ -65,7 +65,8 @@ public class ProductDetailFragment extends Fragment {
             @Override
             public void onResponse(Call<JSONResponseProduct> call, Response<JSONResponseProduct> response) {
                 JSONResponseProduct jsonResponseProduct = response.body();
-                products = new ArrayList<>(Arrays.asList(jsonResponseProduct.getData()));
+                products = jsonResponseProduct.getData();
+
                 Picasso.get().load("" + products.get(0).getImage()).into(product_img);
                 product_name.setText(products.get(0).getName());
                 product_price.setText(products.get(0).getPrice());
@@ -73,7 +74,7 @@ public class ProductDetailFragment extends Fragment {
                 btn_back.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(products.get(0).getType().getId().equals("1")){
+                        if(products.get(0).getType_id().equals("1")){
                             Fragment someFragment = new PizzaFragment();
                             FragmentTransaction transaction = ProductDetailFragment.this.getFragmentManager().beginTransaction();
                             transaction.replace(R.id.frameLayout, someFragment); // give your fragment container id in first parameter

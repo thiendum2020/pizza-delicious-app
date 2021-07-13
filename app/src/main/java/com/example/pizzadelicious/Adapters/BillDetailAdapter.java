@@ -117,7 +117,7 @@ public class BillDetailAdapter extends RecyclerView.Adapter<BillDetailAdapter.Vi
                         @Override
                         public void onResponse(Call<JSONResponseBillDetail> call, Response<JSONResponseBillDetail> response) {
                             JSONResponseBillDetail jsonResponseBillDetail = response.body();
-                            ArrayList<BillDetail> billDetails = new ArrayList<>(Arrays.asList(jsonResponseBillDetail.getData()));
+                            ArrayList<BillDetail> billDetails = jsonResponseBillDetail.getData();
                             for (int i = 0; i < billDetails.size(); i++) {
                                 Common.totalBill = Common.totalBill + Integer.parseInt(billDetails.get(i).getPrices());
                             }
@@ -154,7 +154,7 @@ public class BillDetailAdapter extends RecyclerView.Adapter<BillDetailAdapter.Vi
                             @Override
                             public void onResponse(Call<JSONResponseBillDetail> call, Response<JSONResponseBillDetail> response) {
                                 JSONResponseBillDetail jsonResponseBillDetail = response.body();
-                                ArrayList<BillDetail> billDetails = new ArrayList<>(Arrays.asList(jsonResponseBillDetail.getData()));
+                                ArrayList<BillDetail> billDetails = jsonResponseBillDetail.getData();
                                 for (int i = 0; i < billDetails.size(); i++) {
                                     Common.totalBill = Common.totalBill + Integer.parseInt(billDetails.get(i).getPrices());
                                 }

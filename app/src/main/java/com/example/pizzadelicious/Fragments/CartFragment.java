@@ -94,7 +94,7 @@ public class CartFragment extends Fragment {
                     @Override
                     public void onResponse(Call<JSONResponseBillDetail> call, Response<JSONResponseBillDetail> response) {
                         JSONResponseBillDetail jsonResponseBillDetail = response.body();
-                        billDetails = new ArrayList<>(Arrays.asList(jsonResponseBillDetail.getData()));
+                        billDetails = jsonResponseBillDetail.getData();
 
 
                         BillDetailAdapter billDetailAdapter = new BillDetailAdapter(billDetails, CartFragment.this);

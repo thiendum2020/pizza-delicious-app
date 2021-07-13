@@ -69,7 +69,7 @@ public class AdminPizzaFragment extends Fragment {
                 @Override
                 public void onResponse(Call<JSONResponseProduct> call, Response<JSONResponseProduct> response) {
                     JSONResponseProduct jsonResponsePizza = response.body();
-                    pizzaList = new ArrayList<>(Arrays.asList(jsonResponsePizza.getData()));
+                    pizzaList = jsonResponsePizza.getData();
                     AdminPizzaAdapter adminPizzaAdapter = new AdminPizzaAdapter(pizzaList, AdminPizzaFragment.this);
                     recyclerView_pizza.setAdapter(adminPizzaAdapter);
                     adminPizzaAdapter.notifyDataSetChanged();

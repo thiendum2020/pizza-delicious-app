@@ -74,7 +74,7 @@ public class AdminAccountsFragment extends Fragment {
                 @Override
                 public void onResponse(Call<JSONResponseAccounts> call, Response<JSONResponseAccounts> response) {
                     JSONResponseAccounts jsonResponseAccounts = response.body();
-                    accountList = new ArrayList<>(Arrays.asList(jsonResponseAccounts.getData()));
+                    accountList = jsonResponseAccounts.getData();
 
                     AccountAdapter accountAdapter  = new AccountAdapter( accountList, AdminAccountsFragment.this);
 
