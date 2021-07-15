@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.pizzadelicious.EditProfileFragment;
 import com.example.pizzadelicious.OnBoardActivity;
 import com.example.pizzadelicious.R;
 import com.example.pizzadelicious.Retrofit.Common;

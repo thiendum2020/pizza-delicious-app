@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,10 +18,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.pizzadelicious.Adapters.AccountAdapter;
-import com.example.pizzadelicious.Adapters.BillDetailAdapter;
+import com.example.pizzadelicious.Adapters.CartAdapter;
 import com.example.pizzadelicious.Models.BillDetail;
-import com.example.pizzadelicious.Models.JSONResponseAccounts;
 import com.example.pizzadelicious.Models.JSONResponseBill;
 import com.example.pizzadelicious.Models.JSONResponseBillDetail;
 import com.example.pizzadelicious.R;
@@ -30,7 +27,6 @@ import com.example.pizzadelicious.Retrofit.ApiInterface;
 import com.example.pizzadelicious.Retrofit.Common;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,7 +40,6 @@ public class CartFragment extends Fragment {
     public TextView tv_total_bill;
     TextView tv_count_item, tv_name_user, tv_phone_user, tv_address_user, tv_total;
     Button btn_order;
-    String isPrices;
 
     public CartFragment() {
         // Required empty public constructor
@@ -57,10 +52,7 @@ public class CartFragment extends Fragment {
         setControl(view);
         loadData();
         setEvent();
-//        if(Common.currentBill != null){
-//            Log.e("sl item:", ""+billDetails.size());
-//            tv_count_item.setText(""+billDetails.size());
-//        }
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -72,7 +64,7 @@ public class CartFragment extends Fragment {
                 });
                 Log.e("click ", "1");
             }
-        }, 1000);
+        }, 500);
     }
 
     @Override
@@ -97,9 +89,9 @@ public class CartFragment extends Fragment {
                         billDetails = jsonResponseBillDetail.getData();
 
 
-                        BillDetailAdapter billDetailAdapter = new BillDetailAdapter(billDetails, CartFragment.this);
-                        recyclerView_cart.setAdapter(billDetailAdapter);
-                        billDetailAdapter.notifyDataSetChanged();
+                        CartAdapter cartAdapter = new CartAdapter(billDetails, CartFragment.this);
+                        recyclerView_cart.setAdapter(cartAdapter);
+                        cartAdapter.notifyDataSetChanged();
                         for (int i = 0; i < billDetails.size(); i++) {
                             Log.e("prices " + i, "" + billDetails.get(i).getPrices());
                             Common.totalBill = Common.totalBill + Integer.parseInt(billDetails.get(i).getPrices());

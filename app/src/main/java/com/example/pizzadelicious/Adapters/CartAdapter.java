@@ -2,7 +2,6 @@ package com.example.pizzadelicious.Adapters;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,38 +12,31 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pizzadelicious.Fragments.CartFragment;
-import com.example.pizzadelicious.Fragments.PizzaFragment;
-import com.example.pizzadelicious.Fragments.ProductDetailFragment;
-import com.example.pizzadelicious.Models.Bill;
 import com.example.pizzadelicious.Models.BillDetail;
 import com.example.pizzadelicious.Models.JSONResponseBillDetail;
-import com.example.pizzadelicious.Models.Product;
 import com.example.pizzadelicious.R;
 import com.example.pizzadelicious.Retrofit.ApiInterface;
 import com.example.pizzadelicious.Retrofit.Common;
 import com.example.pizzadelicious.Utils.IOnImageViewAdapterClickListener;
-import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BillDetailAdapter extends RecyclerView.Adapter<BillDetailAdapter.ViewHolder> {
+public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     private ArrayList<BillDetail> list;
     private CartFragment cartFragment;
     private Context context;
     ApiInterface service;
 
 
-    public BillDetailAdapter(ArrayList<BillDetail> list, CartFragment cartFragment) {
+    public CartAdapter(ArrayList<BillDetail> list, CartFragment cartFragment) {
         this.list = list;
         this.cartFragment = cartFragment;
     }
@@ -55,11 +47,11 @@ public class BillDetailAdapter extends RecyclerView.Adapter<BillDetailAdapter.Vi
         View view = LayoutInflater.from(cartFragment.getContext()).inflate(R.layout.cart_item, parent, false);
         context = parent.getContext();
         service = Common.getGsonService();
-        return new BillDetailAdapter.ViewHolder(view);
+        return new CartAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BillDetailAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CartAdapter.ViewHolder holder, int position) {
         BillDetail model = list.get(position);
         Picasso.get().load(model.getProduct().getImage())
                 .into(holder.img_item);

@@ -47,6 +47,7 @@ public class SignUpFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_sign_up, container, false);
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -66,6 +67,7 @@ public class SignUpFragment extends Fragment {
         btn_signUp = view.findViewById(R.id.btn_signUp);
 
     }
+
     private void setEvent() {
         service = Common.getGsonService();
 
@@ -87,7 +89,7 @@ public class SignUpFragment extends Fragment {
                 String phone = et_phone.getText().toString();
 
 
-                if(Common.isConnectedToInternet(getActivity().getBaseContext())){
+                if (Common.isConnectedToInternet(getActivity().getBaseContext())) {
                     final ProgressDialog progressDialog;
                     progressDialog = new ProgressDialog(getContext());
                     progressDialog.setMessage("Waiting...");
@@ -96,9 +98,11 @@ public class SignUpFragment extends Fragment {
                     service.postUser(username, password, name, email, address, phone, "customer").enqueue(new Callback<JSONResponseAccounts>() {
                         @Override
                         public void onResponse(Call<JSONResponseAccounts> call, Response<JSONResponseAccounts> response) {
-                            Toast.makeText(getContext(), "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
+
+                            Toast.makeText(getContext(), "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
                             ((FragmentReplaceActivity) getActivity()).setFragment(new SignInFragment());
+                           
                         }
 
                         @Override
@@ -107,7 +111,7 @@ public class SignUpFragment extends Fragment {
                             progressDialog.dismiss();
                         }
                     });
-                }else{
+                } else {
                     Toast.makeText(getActivity().getBaseContext(), "Vui lòng kiểm tra lại kết nối!", Toast.LENGTH_SHORT).show();
                 }
             }

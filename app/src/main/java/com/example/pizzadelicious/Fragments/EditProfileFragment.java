@@ -1,4 +1,4 @@
-package com.example.pizzadelicious;
+package com.example.pizzadelicious.Fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,7 +11,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,17 +19,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.pizzadelicious.Fragments.AdminAccountsFragment;
-import com.example.pizzadelicious.Fragments.AdminEditAccountFragment;
-import com.example.pizzadelicious.Fragments.ProfileFragment;
 import com.example.pizzadelicious.Models.JSONResponseAccounts;
-import com.example.pizzadelicious.Models.JSONResponseUser;
 import com.example.pizzadelicious.Models.User;
+import com.example.pizzadelicious.R;
 import com.example.pizzadelicious.Retrofit.ApiInterface;
 import com.example.pizzadelicious.Retrofit.Common;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -2,6 +2,7 @@ package com.example.pizzadelicious.Adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.pizzadelicious.Fragments.BillDetailsFragment;
+import com.example.pizzadelicious.Fragments.ProductDetailFragment;
 import com.example.pizzadelicious.Models.Bill;
 import com.example.pizzadelicious.Fragments.OrderHistoryFragment;
 import com.example.pizzadelicious.Models.JSONResponseBill;
@@ -58,11 +63,9 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         holder.tv_date.setText(""+model.getDate());
         holder.tv_prices.setText(""+model.getPrices());
         holder.tv_name.setText(""+model.getUser().getName());
+        holder.tv_phone.setText(""+model.getUser().getPhone());
         holder.tv_address.setText(""+model.getUser().getAddress());
 
-        if(holder.tv_note.getText().equals("created")){
-            holder.tv_note.setTextColor(Color.parseColor("#AAA3A3"));
-        }
         if(holder.tv_note.getText().equals("waiting")){
             holder.tv_note.setTextColor(Color.parseColor("#039BE5"));
         }
@@ -96,7 +99,21 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         order_history_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(orderHistoryFragment.getContext(), "Selected " + model.getId(), Toast.LENGTH_SHORT).show();
+                Bundle bundle = new Bundle();
+                Fragment someFragment = new BillDetailsFragment();
+                bundle.putString("billId", String.valueOf(list.get(position).getId()));
+                bundle.putString("name", holder.tv_name.getText().toString());
+                bundle.putString("phone", holder.tv_phone.getText().toString());
+                bundle.putString("address", holder.tv_address.getText().toString());
+                bundle.putString("total_prices", holder.tv_prices.getText().toString());
+                bundle.putString("status", holder.tv_note.getText().toString());
+
+                someFragment.setArguments(bundle);
+
+                FragmentTransaction transaction = orderHistoryFragment.getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameLayout, someFragment ); // give your fragment container id in first parameter
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
             }
         });
 
@@ -108,7 +125,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_id, tv_note, tv_date, tv_prices, tv_name, tv_address;
+        TextView tv_id, tv_note, tv_date, tv_prices, tv_name, tv_phone, tv_address;
         Button btn_received;
 
         public ViewHolder(@NonNull View itemView) {
@@ -118,6 +135,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             tv_date = itemView.findViewById(R.id.tv_date);
             tv_prices = itemView.findViewById(R.id.tv_prices);
             tv_name = itemView.findViewById(R.id.tv_name);
+            tv_phone = itemView.findViewById(R.id.tv_phone);
             tv_address = itemView.findViewById(R.id.tv_address);
             btn_received = itemView.findViewById(R.id.btn_received);
 

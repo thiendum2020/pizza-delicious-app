@@ -87,13 +87,13 @@ public class SignInFragment extends Fragment {
                     service.getUserLogin(username, password).enqueue(new Callback<JSONResponseUser>() {
                         @Override
                         public void onResponse(Call<JSONResponseUser> call, Response<JSONResponseUser> response) {
-                            Log.d("loginF", ""+ response.body().getStatus());
-                            if(Integer.parseInt(response.body().getStatus())==1){
+
+                            if(Integer.parseInt(response.body().getStatus())==0){
                                 Toast.makeText(getContext(), "Tên tài khoản chưa được đăng ký!", Toast.LENGTH_SHORT).show();
 
                             }
-                            Log.d("loginA", ""+ response.body().getStatus());
-                            if(Integer.parseInt(response.body().getStatus())==1){
+
+                            if(Integer.parseInt(response.body().getStatus())==2){
                                 Toast.makeText(getContext(), "Sai mật khẩu!", Toast.LENGTH_SHORT).show();
                             }
 
@@ -104,11 +104,9 @@ public class SignInFragment extends Fragment {
 
 
                                 if(Common.currentUser.getRole().equals("admin")){
-                                    Log.d("role", "" + Common.currentUser.getRole());
                                     startActivity(new Intent(getContext(), AdminActivity.class));
                                 }
                                 if(Common.currentUser.getRole().equals("customer")){
-                                    Log.d("role", "" + Common.currentUser.getRole());
                                     startActivity(new Intent(getContext(), MainActivity.class));
                                 }
 
