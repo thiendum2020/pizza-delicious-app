@@ -87,7 +87,24 @@ public class SignUpFragment extends Fragment {
                 String email = et_email.getText().toString();
                 String address = et_address.getText().toString();
                 String phone = et_phone.getText().toString();
-
+                if (username.trim().equals("")) {
+                    Toast.makeText(getContext(), "Username không được để trống!", Toast.LENGTH_SHORT).show();
+                }
+                if (password.trim().equals("")) {
+                    Toast.makeText(getContext(), "Password không được để trống!", Toast.LENGTH_SHORT).show();
+                }
+                if (name.trim().equals("")) {
+                    Toast.makeText(getContext(), "Name không được để trống!", Toast.LENGTH_SHORT).show();
+                }
+                if (email.trim().equals("")) {
+                    Toast.makeText(getContext(), "Email không được để trống!", Toast.LENGTH_SHORT).show();
+                }
+                if (address.trim().equals("")) {
+                    Toast.makeText(getContext(), "Address không được để trống!", Toast.LENGTH_SHORT).show();
+                }
+                if (phone.trim().equals("")) {
+                    Toast.makeText(getContext(), "Phone không được để trống!", Toast.LENGTH_SHORT).show();
+                }
 
                 if (Common.isConnectedToInternet(getActivity().getBaseContext())) {
                     final ProgressDialog progressDialog;
@@ -95,11 +112,11 @@ public class SignUpFragment extends Fragment {
                     progressDialog.setMessage("Waiting...");
                     progressDialog.show();
 
-                    service.postUser(username, password, name, email, address, phone, "customer").enqueue(new Callback<JSONResponseAccounts>() {
+                    service.postUser(""+username, ""+password, ""+name, ""+email, ""+address, ""+phone, "customer").enqueue(new Callback<JSONResponseAccounts>() {
                         @Override
                         public void onResponse(Call<JSONResponseAccounts> call, Response<JSONResponseAccounts> response) {
                             progressDialog.dismiss();
-
+                            Log.d("sign up", "onResponse: " + response.body());
                             Toast.makeText(getContext(), "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
                             ((FragmentReplaceActivity) getActivity()).setFragment(new SignInFragment());
                            
@@ -107,6 +124,7 @@ public class SignUpFragment extends Fragment {
 
                         @Override
                         public void onFailure(Call<JSONResponseAccounts> call, Throwable t) {
+
                             Toast.makeText(getContext(), "Đăng ký Không thành công. Vui lòng kiểm tra lại thông tin!", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
                         }

@@ -79,48 +79,51 @@ public class SignInFragment extends Fragment {
             public void onClick(View v) {
                 String username = et_username.getText().toString();
                 String password = et_password.getText().toString();
+                if (username.trim().equals("")) {
+                    Toast.makeText(getContext(), "Username không được để trống!", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (Common.isConnectedToInternet(getActivity().getBaseContext())) {
+                        ProgressDialog mDialog = new ProgressDialog(getActivity().getBaseContext().getApplicationContext());
 
+                        service.getUserLogin(username, password).enqueue(new Callback<JSONResponseUser>() {
+                            @Override
+                            public void onResponse(Call<JSONResponseUser> call, Response<JSONResponseUser> response) {
 
-                if(Common.isConnectedToInternet(getActivity().getBaseContext())){
-                    ProgressDialog mDialog = new ProgressDialog(getActivity().getBaseContext().getApplicationContext());
+                                if (Integer.parseInt(response.body().getStatus()) == 0) {
+                                    Toast.makeText(getContext(), "Username chưa được đăng ký!", Toast.LENGTH_SHORT).show();
 
-                    service.getUserLogin(username, password).enqueue(new Callback<JSONResponseUser>() {
-                        @Override
-                        public void onResponse(Call<JSONResponseUser> call, Response<JSONResponseUser> response) {
-
-                            if(Integer.parseInt(response.body().getStatus())==0){
-                                Toast.makeText(getContext(), "Tên tài khoản chưa được đăng ký!", Toast.LENGTH_SHORT).show();
-
-                            }
-
-                            if(Integer.parseInt(response.body().getStatus())==2){
-                                Toast.makeText(getContext(), "Sai mật khẩu!", Toast.LENGTH_SHORT).show();
-                            }
-
-                            if(Integer.parseInt(response.body().getStatus())==1){
-                                Common.currentUser = response.body().getData();
-                                Common.currentBill = null;
-                                Toast.makeText(getContext(), "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-
-
-                                if(Common.currentUser.getRole().equals("admin")){
-                                    startActivity(new Intent(getContext(), AdminActivity.class));
-                                }
-                                if(Common.currentUser.getRole().equals("customer")){
-                                    startActivity(new Intent(getContext(), MainActivity.class));
                                 }
 
+                                if (Integer.parseInt(response.body().getStatus()) == 2) {
+                                    Toast.makeText(getContext(), "Sai mật khẩu!", Toast.LENGTH_SHORT).show();
+                                }
+
+                                if (Integer.parseInt(response.body().getStatus()) == 1) {
+                                    Common.currentUser = response.body().getData();
+                                    Common.currentBill = null;
+                                    Toast.makeText(getContext(), "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+
+
+                                    if (Common.currentUser.getRole().equals("admin")) {
+                                        startActivity(new Intent(getContext(), AdminActivity.class));
+                                    }
+                                    if (Common.currentUser.getRole().equals("customer")) {
+                                        startActivity(new Intent(getContext(), MainActivity.class));
+                                    }
+
+                                }
+
                             }
 
-                        }
-                        @Override
-                        public void onFailure(Call<JSONResponseUser> call, Throwable t) {
-                            Toast.makeText(getActivity().getBaseContext().getApplicationContext(), ""+t.getMessage() , Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                            @Override
+                            public void onFailure(Call<JSONResponseUser> call, Throwable t) {
+                                Toast.makeText(getActivity().getBaseContext().getApplicationContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
-                }else{
-                    Toast.makeText(getActivity().getBaseContext(), "Vui lòng kiểm tra lại kết nối!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity().getBaseContext(), "Vui lòng kiểm tra lại kết nối!", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
