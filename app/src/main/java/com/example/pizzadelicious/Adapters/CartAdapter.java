@@ -52,6 +52,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull CartAdapter.ViewHolder holder, int position) {
+
         BillDetail model = list.get(position);
         Picasso.get().load(model.getProduct().getImage())
                 .into(holder.img_item);

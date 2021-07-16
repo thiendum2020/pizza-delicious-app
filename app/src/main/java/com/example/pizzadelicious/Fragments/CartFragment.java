@@ -75,6 +75,7 @@ public class CartFragment extends Fragment {
     }
 
     private void loadData() {
+
         if (Common.isConnectedToInternet(getActivity().getBaseContext())) {
 
             Common.totalBill = 0;
